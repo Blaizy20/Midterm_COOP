@@ -2,11 +2,9 @@
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/loan_helpers.php';
 
-// Get system settings
 $settings = get_system_settings();
-
-// Handle login form
 $error = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -18,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Invalid credentials (staff only).';
     } else {
         login_user($user);
-        header('Location: ' . APP_BASE . 'staff/dashboard.php');
+        header('Location: ' . APP_BASE . '/staff/dashboard.php');
         exit;
     }
 }
@@ -28,34 +26,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Staff Login</title>
+    <title>Staff Login – <?php echo htmlspecialchars($settings['system_name'] ?? 'CredenceLend'); ?></title>
     <link rel="stylesheet" href="<?php echo APP_BASE; ?>/assets/css/theme.css">
+    <style>
+        .topbar-logo { height:34px; width:auto; max-width:120px; border-radius:8px; background:white; padding:3px; }
+        .login-logo  { display:block; height:56px; width:auto; max-width:180px; margin:0 auto 12px; border-radius:14px; background:white; padding:6px; }
+    </style>
 </head>
 <body>
-    <div class="topbar" style="background-color: <?php echo htmlspecialchars($settings['primary_color'] ?? '#2c3ec5'); ?> !important;">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
         <div class="brand">
-            <img 
-                src="<?php echo htmlspecialchars($settings['logo_path'] ?? (APP_BASE . '/assets/img/logo.png')); ?>" 
-                alt="Logo"
-            >
-            <div style="font-weight:800;line-height:1;">
-                <?php echo htmlspecialchars($settings['system_name'] ?? 'CredenceLend'); ?>
+            <img class="topbar-logo"
+                 src="<?php echo APP_BASE; ?>/assets/img/logo.png"
+                 alt="Logo">
+            <div>
+                <div style="font-weight:800;line-height:1.2;">
+                    <?php echo htmlspecialchars($settings['system_name'] ?? 'CredenceLend'); ?>
+                </div>
+                <div class="small" style="color:#fde8ec;">Staff Portal</div>
             </div>
-            <div class="small" style="color:#fde8ec;">Staff Portal</div>
         </div>
     </div>
 
+    <!-- LOGIN CARD -->
     <div class="center-wrap">
         <div class="card auth-card">
-            <div style="text-align: center;">
-                <img 
-                    src="<?php echo htmlspecialchars($settings['logo_path'] ?? (APP_BASE . '/assets/img/logo.png')); ?>" 
-                    alt="Logo" 
-                    style="height:56px;border-radius:14px;background:white;padding:6px;"
-                >
-            </div>
-            <h2 style="margin:10px 0 4px;">Staff Login</h2>
-            <div class="small">Admin / Manager / Credit Investigator / Loan Officer / Cashier</div>
+
+            <img class="login-logo"
+                 src="<?php echo APP_BASE; ?>/assets/img/logo.png"
+                 alt="Logo">
+
+            <h2 style="text-align:center;margin:0 0 4px;">Staff Login</h2>
+            <p class="small" style="text-align:center;margin:0 0 16px;">
+                Admin / Manager / Credit Investigator / Loan Officer / Cashier
+            </p>
 
             <?php if ($error): ?>
                 <div class="alert err"><?php echo htmlspecialchars($error); ?></div>
@@ -63,28 +69,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="post">
                 <label class="label">Username</label>
-                <input class="input" name="username" required>
+                <input class="input" name="username" required autocomplete="username">
 
                 <label class="label">Password</label>
-                <div style="display:flex;gap:8px;align-items:center;">
-                    <input class="input" type="password" id="pw" name="password" required>
-                    <div style="width:24px;height:24px;"></div>
-                </div>
+                <input class="input" type="password" id="pw" name="password" required autocomplete="current-password">
 
                 <label style="display:flex;gap:8px;align-items:center;margin-top:10px;">
                     <input type="checkbox" onclick="document.getElementById('pw').type = this.checked ? 'text' : 'password';">
                     <span class="small">Show password</span>
                 </label>
 
-                <div style="margin-top:14px;">
-                    <button class="btn btn-primary" style="width:100%;">Login</button>
+                <div style="margin-top:16px;">
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Login</button>
                 </div>
             </form>
 
-            <div style="margin-top:10px;">
-                <a class="small" href="<?php echo APP_BASE; ?>forgot-password.php">Forgot password?</a>
+            <div style="margin-top:12px;text-align:center;">
+                <a class="small" href="<?php echo APP_BASE; ?>/forgot-password.php">Forgot password?</a>
             </div>
+
         </div>
     </div>
+
 </body>
 </html>
