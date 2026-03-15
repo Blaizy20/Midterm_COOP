@@ -1,16 +1,14 @@
 <?php
-// Database connection (MariaDB/MySQL)
-// Adjust if your XAMPP/WAMP uses a different host/user/pass.
-$DB_HOST = 'localhost';
-$DB_USER = 'root';
-$DB_PASS = '';
-$DB_NAME = 'loan_management';
+// Database connection using Railway MySQL environment variables
+$DB_HOST = $_ENV['MYSQLHOST'] ?? 'localhost';
+$DB_USER = $_ENV['MYSQLUSER'] ?? 'root';
+$DB_PASS = $_ENV['MYSQLPASSWORD'] ?? '';
+$DB_NAME = $_ENV['MYSQLDATABASE'] ?? 'loan_management';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 /**
  * Return a singleton mysqli connection (with DB selected).
- * NOTE: setup/setup_db.php will reset tables; this function only ensures the DB exists.
  */
 function db() {
   global $DB_HOST, $DB_USER, $DB_PASS, $DB_NAME;
@@ -29,7 +27,6 @@ function db() {
 
 function _bind_params($stmt, $types, $params) {
   if ($types === '' || $params === null || count($params) === 0) return;
-  // bind_param requires references
   $bind = [];
   $bind[] = $types;
   foreach ($params as $k => $v) {
@@ -38,10 +35,6 @@ function _bind_params($stmt, $types, $params) {
   call_user_func_array([$stmt, 'bind_param'], $bind);
 }
 
-/**
- * Prepared statement helper.
- * Example: q("SELECT * FROM users WHERE user_id = ?", "i", [$id]);
- */
 function q($sql, $types = '', $params = []) {
   $conn = db();
   $stmt = $conn->prepare($sql);
