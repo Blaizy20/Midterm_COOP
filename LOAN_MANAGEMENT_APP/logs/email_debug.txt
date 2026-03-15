@@ -1,0 +1,18 @@
+2026-02-03 12:28:32 - Connected to smtp.gmail.com:587
+GREETING: 220 smtp.gmail.com ESMTP d9443c01a7336-2a88b3eee4asm169460995ad.20 - gsmtp
+EHLO: 250-smtp.gmail.com at your service, [2001:fd8:b311:b891:9ca5:331e:89dc:2e16]
+STARTTLS: 220 2.0.0 Ready to start TLS
+2026-02-03 12:28:34 - TLS enabled
+EHLO2: 250-smtp.gmail.com at your service, [2001:fd8:b311:b891:9ca5:331e:89dc:2e16]
+AUTH: 334 VXNlcm5hbWU6
+USER: 334 UGFzc3dvcmQ6
+PASS: 535-5.7.8 Username and Password not accepted. For more information, go to
+2026-02-03 12:28:50 - Connected to smtp.gmail.com:587
+GREETING: 220 smtp.gmail.com ESMTP d9443c01a7336-2a88b3eee4asm169471495ad.20 - gsmtp
+EHLO: 250-smtp.gmail.com at your service, [2001:fd8:b311:b891:9ca5:331e:89dc:2e16]
+STARTTLS: 220 2.0.0 Ready to start TLS
+2026-02-03 12:28:51 - TLS enabled
+EHLO2: 250-smtp.gmail.com at your service, [2001:fd8:b311:b891:9ca5:331e:89dc:2e16]
+AUTH: 334 VXNlcm5hbWU6
+USER: 334 UGFzc3dvcmQ6
+PASS: 535-5.7.8 Username and Password not accepted. For more information, go to

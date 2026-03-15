@@ -1,0 +1,56 @@
+
+========================================
+Timestamp: 2026-02-03 12:15:13
+Email: adrielleadycruz@gmail.com
+User: 
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=c0d0846c9e711466078abc730c36534d077cb90102ec23860d0c108dd871dd17
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:16:59
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=314d1f6e3e13cdd5e8ad659e02a0d3cf94ed770552b96288357e2f2c09d5dfb5
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:17:14
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=53233b1ad0dea5caa13eb828dfd15db746d333b21989a5036bcae1eb1bbc35f2
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:17:44
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=35f1df582789113666243d88502847cf1a04aa8029deb748d75d9864893c313f
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:19:19
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=8ef73f5237b548ba211d8becc93ea56e520b260747a439549751a66332943f5f
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:20:52
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=14468ae34e8c5972d415e53e5589f5fcd61554bd5ae6207ff113a8b2bf8e1345
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
+
+========================================
+Timestamp: 2026-02-03 12:21:30
+Email: adrielleadycruz@gmail.com
+Name: Ady Cruz
+Reset Link: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php?step=2&amp;token=83dcf82634c7322140f98e822b502037606799ffc7e49f35aca3f57510ef79e3
+Instructions: Copy and paste the full reset link into your browser to reset your password.
+========================================
