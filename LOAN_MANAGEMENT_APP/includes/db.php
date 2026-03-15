@@ -1,9 +1,12 @@
 <?php
-// --- Dynamic APP_BASE (works on localhost and Railway) ---
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+// Detect HTTPS correctly behind Railway's proxy
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+
+$protocol = $isHttps ? 'https' : 'http';
 define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 
-// --- Database Config (Railway env vars with localhost fallback) ---
+// Database Config (Railway env vars with localhost fallback)
 $DB_HOST = getenv('mysql.railway.internal')     ?: 'localhost';
 $DB_PORT = (int)(getenv('3306') ?: 3306);
 $DB_USER = getenv('root')     ?: 'root';
@@ -12,9 +15,6 @@ $DB_NAME = getenv('railway') ?: 'loan_management';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-/**
- * Return a singleton mysqli connection (with DB selected).
- */
 function db() {
   global $DB_HOST, $DB_PORT, $DB_USER, $DB_PASS, $DB_NAME;
   static $conn = null;
@@ -22,8 +22,6 @@ function db() {
   if ($conn === null) {
     $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
     $conn->set_charset('utf8mb4');
-
-    // Ensure DB exists, then select it
     $conn->query("CREATE DATABASE IF NOT EXISTS `$DB_NAME` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
     $conn->select_db($DB_NAME);
   }
