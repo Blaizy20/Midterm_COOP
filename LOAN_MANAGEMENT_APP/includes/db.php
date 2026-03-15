@@ -1,9 +1,9 @@
 <?php
 // Database connection using Railway MySQL environment variables
-$DB_HOST = $_ENV['MYSQLHOST'] ?? 'localhost';
-$DB_USER = $_ENV['MYSQLUSER'] ?? 'root';
-$DB_PASS = $_ENV['MYSQLPASSWORD'] ?? '';
-$DB_NAME = $_ENV['MYSQLDATABASE'] ?? 'loan_management';
+$DB_HOST = $_ENV['mysql.railway.internal'] ?? 'localhost';
+$DB_USER = $_ENV['root'] ?? 'root';
+$DB_PASS = $_ENV['NlgKvWCfFfMkCMPcOQlnHDkanrqoZnDe'] ?? '';
+$DB_NAME = $_ENV['railway'] ?? 'loan_management';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
