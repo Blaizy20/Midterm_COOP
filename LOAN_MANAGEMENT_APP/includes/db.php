@@ -1,9 +1,14 @@
 <?php
-// Database connection using Railway MySQL environment variables
-$DB_HOST = $_ENV['mysql.railway.internal'] ?? 'localhost';
-$DB_USER = $_ENV['root'] ?? 'root';
-$DB_PASS = $_ENV['NlgKvWCfFfMkCMPcOQlnHDkanrqoZnDe'] ?? '';
-$DB_NAME = $_ENV['railway'] ?? 'loan_management';
+// --- Dynamic APP_BASE ---
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
+
+// --- Database Config (Railway env vars with localhost fallback) ---
+$DB_HOST = getenv('MYSQLHOST')     ?: 'localhost';
+$DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
+$DB_USER = getenv('MYSQLUSER')     ?: 'root';
+$DB_PASS = getenv('MYSQLPASSWORD') ?: '';
+$DB_NAME = getenv('MYSQLDATABASE') ?: 'loan_management';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -11,11 +16,11 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
  * Return a singleton mysqli connection (with DB selected).
  */
 function db() {
-  global $DB_HOST, $DB_USER, $DB_PASS, $DB_NAME;
+  global $DB_HOST, $DB_PORT, $DB_USER, $DB_PASS, $DB_NAME;
   static $conn = null;
 
   if ($conn === null) {
-    $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS);
+    $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
     $conn->set_charset('utf8mb4');
 
     // Ensure DB exists, then select it
@@ -35,6 +40,10 @@ function _bind_params($stmt, $types, $params) {
   call_user_func_array([$stmt, 'bind_param'], $bind);
 }
 
+/**
+ * Prepared statement helper.
+ * Example: q("SELECT * FROM users WHERE user_id = ?", "i", [$id]);
+ */
 function q($sql, $types = '', $params = []) {
   $conn = db();
   $stmt = $conn->prepare($sql);
