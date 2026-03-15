@@ -1,0 +1,74 @@
+PASSWORD RESET - SEND EMAILS TO ANY GMAIL
+==========================================
+
+✅ SYSTEM STATUS: READY TO SEND EMAILS!
+
+The system is already configured to send password reset emails via Gmail SMTP.
+Your Gmail: adrielleadycruz@gmail.com
+Any staff member with a valid email will receive reset notifications.
+
+
+QUICK START - 3 SIMPLE STEPS:
+=============================
+
+STEP 1: Verify Staff Have Email Addresses
+------------------------------------------
+1. Go to: http://localhost/LOAN_MANAGEMENT_APP/staff/registration.php
+2. Look at "Manage Staff Accounts" table
+3. Make sure all staff have valid email addresses in the "Email" column
+4. If missing emails, click "Edit" and add them
+
+STEP 2: Test the Password Reset System
+---------------------------------------
+1. Go to: http://localhost/LOAN_MANAGEMENT_APP/staff/forgot_password.php
+2. Enter any VALID email address (example: test@gmail.com)
+3. The system will send a real email to that address
+4. Check the email inbox for the password reset link
+
+STEP 3: Users Receive Email & Reset Password
+----------------------------------------------
+When a user requests password reset:
+✓ They enter their email address
+✓ An email is sent immediately to their Gmail inbox
+✓ Email contains a reset link (valid for 1 hour)
+✓ They click the link and create a new password
+✓ They can then login with new password
+
+
+HOW IT WORKS:
+=============
+- System sends emails via Gmail's SMTP server
+- Uses your Gmail account: adrielleadycruz@gmail.com
+- Any staff member's email will receive the notification
+- Reset links expire after 1 hour for security
+- All emails are logged to: logs/password_resets.txt
+
+
+TROUBLESHOOTING:
+================
+
+Problem: "Error sending email"
+Solution: Make sure staff email is valid format (example@gmail.com)
+
+Problem: Email not received
+Solution: 
+  1. Check spam/junk folder in Gmail
+  2. Check logs/password_resets.txt for the reset link
+  3. Make sure you have internet connection
+
+Problem: Reset link expired
+Solution: Request a new password reset (link only valid 1 hour)
+
+
+SECURITY NOTES:
+===============
+✓ Reset tokens expire after 1 hour
+✓ Passwords must be 8+ characters with upper/lower/number/special
+✓ Only staff accounts can reset (not customers)
+✓ Gmail account password is secured in the code
+
+
+ALL DONE! ✓
+===========
+Your system is ready to send password reset emails to any valid Gmail address.
+Staff can request password resets anytime at the forgot_password.php page.
