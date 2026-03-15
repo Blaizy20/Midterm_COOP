@@ -1,14 +1,14 @@
 <?php
-// --- Dynamic APP_BASE ---
+// --- Dynamic APP_BASE (works on localhost and Railway) ---
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 
 // --- Database Config (Railway env vars with localhost fallback) ---
-$DB_HOST = getenv('MYSQLHOST')     ?: 'localhost';
-$DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
-$DB_USER = getenv('MYSQLUSER')     ?: 'root';
-$DB_PASS = getenv('MYSQLPASSWORD') ?: '';
-$DB_NAME = getenv('MYSQLDATABASE') ?: 'loan_management';
+$DB_HOST = getenv('mysql.railway.internal')     ?: 'localhost';
+$DB_PORT = (int)(getenv('3306') ?: 3306);
+$DB_USER = getenv('root')     ?: 'root';
+$DB_PASS = getenv('NlgKvWCfFfMkCMPcOQlnHDkanrqoZnDe ') ?: '';
+$DB_NAME = getenv('railway') ?: 'loan_management';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -40,10 +40,6 @@ function _bind_params($stmt, $types, $params) {
   call_user_func_array([$stmt, 'bind_param'], $bind);
 }
 
-/**
- * Prepared statement helper.
- * Example: q("SELECT * FROM users WHERE user_id = ?", "i", [$id]);
- */
 function q($sql, $types = '', $params = []) {
   $conn = db();
   $stmt = $conn->prepare($sql);
