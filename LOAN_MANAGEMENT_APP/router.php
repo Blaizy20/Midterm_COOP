@@ -8,27 +8,23 @@ if (in_array($ext, $staticExtensions) && file_exists(__DIR__ . $uri)) {
     return false;
 }
 
-// Strip query string and route to actual PHP file
+// Temporary: allow genhash directly
+if ($uri === '/genhash.php' && file_exists(__DIR__ . '/genhash.php')) {
+    require __DIR__ . '/genhash.php';
+    exit;
+}
+
+// Route to actual PHP file
 $file = __DIR__ . rtrim($uri, '/');
-
-// Direct PHP file match
 if (is_file($file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-    require $file;
-    exit;
+    require $file; exit;
 }
-
-// Try appending .php
 if (is_file($file . '.php')) {
-    require $file . '.php';
-    exit;
+    require $file . '.php'; exit;
 }
-
-// Root → redirect to staff login
 if ($uri === '/' || $uri === '') {
-    require __DIR__ . '/staff/login.php';
-    exit;
+    require __DIR__ . '/staff/login.php'; exit;
 }
 
-// 404 fallback
 http_response_code(404);
 echo '404 - Page not found';
