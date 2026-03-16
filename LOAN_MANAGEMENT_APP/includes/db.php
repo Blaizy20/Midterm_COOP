@@ -2,8 +2,6 @@
 // ============================================================
 // ENVIRONMENT DETECTION
 // ============================================================
-
-// Detect HTTPS correctly (works behind Railway/cPanel proxies)
 $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
         || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
 $protocol = $isHttps ? 'https' : 'http';
@@ -11,11 +9,9 @@ define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 
 // ============================================================
 // DATABASE CONFIG
-// Automatically detects: Railway → Web Host → Localhost
 // ============================================================
-
 if (getenv('MYSQLHOST')) {
-    // --- RAILWAY ---
+    // Railway
     $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
     $DB_PORT = (int)(getenv('MYSQLPORT') ?: 27377);
     $DB_USER = getenv('root');
@@ -23,9 +19,7 @@ if (getenv('MYSQLHOST')) {
     $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
-    // --- ANY WEB HOST (cPanel, Hostinger, etc.) ---
-    // Set these in your hosting control panel's environment variables
-    // OR replace the getenv() with your actual credentials below
+    // Web host (cPanel, Hostinger, etc.)
     $DB_HOST = getenv('DB_HOST');
     $DB_PORT = (int)(getenv('DB_PORT') ?: 3306);
     $DB_USER = getenv('DB_USER');
@@ -33,15 +27,13 @@ if (getenv('MYSQLHOST')) {
     $DB_NAME = getenv('DB_NAME');
 
 } else {
-    // --- LOCAL (XAMPP / WAMP) ---
+    // Local (XAMPP)
     $DB_HOST = '127.0.0.1';
     $DB_PORT = 3306;
     $DB_USER = 'root';
     $DB_PASS = '';
     $DB_NAME = 'cooperative_loan_db';
 }
-
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // ============================================================
 // SINGLETON CONNECTION
@@ -51,7 +43,10 @@ function db() {
     static $conn = null;
 
     if ($conn === null) {
-        $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
+        $conn = @new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
+        if ($conn->connect_error) {
+            throw new Exception("DB connection failed: " . $conn->connect_error);
+        }
         $conn->set_charset('utf8mb4');
         $conn->select_db($DB_NAME);
     }
