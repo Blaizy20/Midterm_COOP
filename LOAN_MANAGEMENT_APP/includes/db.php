@@ -13,7 +13,7 @@ $DB_USER = getenv('root')     ?: 'root';
 $DB_PASS = getenv('NlgKvWCfFfMkCMPcOQlnHDkanrqoZnDe ') ?: '';
 $DB_NAME = getenv('railway') ?: 'loan_management';
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS);
 
 function db() {
   global $DB_HOST, $DB_PORT, $DB_USER, $DB_PASS, $DB_NAME;
