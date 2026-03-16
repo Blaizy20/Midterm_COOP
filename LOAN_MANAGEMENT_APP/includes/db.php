@@ -7,11 +7,11 @@ $protocol = $isHttps ? 'https' : 'http';
 define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 
 // Database Config (Railway env vars with localhost fallback)
-$DB_HOST = getenv('yamabiko.proxy.rlwy.net')     ?: 'localhost';
-$DB_PORT = (int)(getenv('27377') ?: 3306);
-$DB_USER = getenv('root')     ?: 'root';
-$DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo') ?: '';
-$DB_NAME = getenv('railway') ?: 'loan_management';
+$DB_HOST = getenv('yamabiko.proxy.rlwy.net');
+$DB_PORT = (int)(getenv('27377');
+$DB_USER = getenv('root');
+$DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
+$DB_NAME = getenv('railway');
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
