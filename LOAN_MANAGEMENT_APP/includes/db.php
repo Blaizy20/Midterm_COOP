@@ -1,22 +1,14 @@
 <?php
 // ============================================================
-// ENVIRONMENT DETECTION
-// ============================================================
-$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
-$protocol = $isHttps ? 'https' : 'http';
-define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
-
-// ============================================================
-// DATABASE CONFIG
+// DATABASE CONFIG — Environment Detection
 // ============================================================
 if (getenv('MYSQLHOST')) {
-    // Railway — uses Railway's auto-injected MySQL variables
-    $DB_HOST = getenv('MYSQLHOST');
-    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
-    $DB_USER = getenv('MYSQLUSER');
-    $DB_PASS = getenv('MYSQLPASSWORD');
-    $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
+    // Railway (auto-injected variables)
+    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
+    $DB_PORT = (int)(getenv('27377') ?: 27377);
+    $DB_USER = getenv('root');
+    $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
+    $DB_NAME = getenv('railway') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
     // Web host (cPanel, Hostinger, etc.)
@@ -32,8 +24,10 @@ if (getenv('MYSQLHOST')) {
     $DB_PORT = 3306;
     $DB_USER = 'root';
     $DB_PASS = '';
-    $DB_NAME = 'cooperative_loan_db';
+    $DB_NAME = 'loan_management';
 }
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // ============================================================
 // SINGLETON CONNECTION
@@ -43,11 +37,9 @@ function db() {
     static $conn = null;
 
     if ($conn === null) {
-        $conn = @new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
-        if ($conn->connect_error) {
-            throw new Exception("DB connection failed: " . $conn->connect_error);
-        }
+        $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
         $conn->set_charset('utf8mb4');
+        $conn->query("CREATE DATABASE IF NOT EXISTS `$DB_NAME` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
         $conn->select_db($DB_NAME);
     }
     return $conn;
