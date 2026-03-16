@@ -4,11 +4,11 @@
 // ============================================================
 if (getenv('MYSQLHOST')) {
     // Railway (auto-injected variables)
-    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
-    $DB_PORT = (int)(getenv('27377') ?: 27377);
-    $DB_USER = getenv('root');
-    $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
-    $DB_NAME = getenv('railway') ?: 'railway';
+    $DB_HOST = getenv('MYSQLHOST');
+    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
+    $DB_USER = getenv('MYSQLUSER');
+    $DB_PASS = getenv('MYSQL_ROOT_PASSWORD');
+    $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
     // Web host (cPanel, Hostinger, etc.)
