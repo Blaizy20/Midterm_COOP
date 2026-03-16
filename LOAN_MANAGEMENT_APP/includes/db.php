@@ -13,10 +13,10 @@ define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 if (getenv('MYSQLHOST')) {
     // Railway
     $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
-    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 27377);
+    $DB_PORT = (int)(getenv('27377') ?: 27377);
     $DB_USER = getenv('root');
     $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
-    $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
+    $DB_NAME = getenv('railway') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
     // Web host (cPanel, Hostinger, etc.)
