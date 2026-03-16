@@ -11,12 +11,12 @@ define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 // DATABASE CONFIG
 // ============================================================
 if (getenv('MYSQLHOST')) {
-    // Railway
-    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
-    $DB_PORT = (int)(getenv('27377') ?: 27377);
-    $DB_USER = getenv('root');
-    $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
-    $DB_NAME = getenv('railway') ?: 'railway';
+    // Railway — uses Railway's auto-injected MySQL variables
+    $DB_HOST = getenv('MYSQLHOST');
+    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
+    $DB_USER = getenv('MYSQLUSER');
+    $DB_PASS = getenv('MYSQLPASSWORD');
+    $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
     // Web host (cPanel, Hostinger, etc.)
