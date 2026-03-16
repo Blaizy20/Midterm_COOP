@@ -1,26 +1,27 @@
 <?php
-// Database connection (MariaDB/MySQL)
-// Adjust if your XAMPP/WAMP uses a different host/user/pass.
-$DB_HOST = 'yamabiko.proxy.rlwy.net';
-$DB_USER = 'root';
-$DB_PASS = 'WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo';
-$DB_NAME = 'railway';
+// Detect HTTPS correctly behind Railway's proxy
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+
+$protocol = $isHttps ? 'https' : 'http';
+define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
+
+// Database Config (Railway env vars with localhost fallback)
+$DB_HOST = getenv('MYSQLHOST')     ?: 'yamabiko.proxy.rlwy.net';
+$DB_PORT = (int)(getenv('MYSQLPORT') ?: 27377);
+$DB_USER = getenv('MYSQLUSER')     ?: 'root';
+$DB_PASS = getenv('MYSQLPASSWORD') ?: 'WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo';
+$DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-/**
- * Return a singleton mysqli connection (with DB selected).
- * NOTE: setup/setup_db.php will reset tables; this function only ensures the DB exists.
- */
 function db() {
-  global $DB_HOST, $DB_USER, $DB_PASS, $DB_NAME;
+  global $DB_HOST, $DB_PORT, $DB_USER, $DB_PASS, $DB_NAME;
   static $conn = null;
 
   if ($conn === null) {
-    $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS);
+    $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, '', $DB_PORT);
     $conn->set_charset('utf8mb4');
-
-    // Ensure DB exists, then select it
     $conn->query("CREATE DATABASE IF NOT EXISTS `$DB_NAME` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
     $conn->select_db($DB_NAME);
   }
@@ -29,7 +30,6 @@ function db() {
 
 function _bind_params($stmt, $types, $params) {
   if ($types === '' || $params === null || count($params) === 0) return;
-  // bind_param requires references
   $bind = [];
   $bind[] = $types;
   foreach ($params as $k => $v) {
@@ -38,10 +38,6 @@ function _bind_params($stmt, $types, $params) {
   call_user_func_array([$stmt, 'bind_param'], $bind);
 }
 
-/**
- * Prepared statement helper.
- * Example: q("SELECT * FROM users WHERE user_id = ?", "i", [$id]);
- */
 function q($sql, $types = '', $params = []) {
   $conn = db();
   $stmt = $conn->prepare($sql);
