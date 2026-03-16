@@ -4,7 +4,7 @@
 // ============================================================
 if (getenv('MYSQLHOST')) {
     // Railway (auto-injected variables)
-    $DB_HOST = getenv('MYSQLHOST');
+    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
     $DB_PORT = (int)(getenv('27377') ?: 3306);
     $DB_USER = getenv('MYSQLUSER');
     $DB_PASS = getenv('MYSQLPASSWORD');
