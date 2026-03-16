@@ -1,3 +1,4 @@
+
 :root{
   --brand-red:#2c3ec5;
   --brand-red-hover:#1e2ba8;
@@ -9,7 +10,6 @@
   --sidebar-w: 220px;
   --radius: 14px;
 }
-
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text)}
 a{color:var(--brand-red);text-decoration:none}
@@ -68,24 +68,4 @@ a:hover{text-decoration:underline}
   .badge{padding:2px 5px;font-size:10px;display:inline-block;border-radius:3px}
   a{text-decoration:none;color:#000}
   div[style*="overflow:auto"]{overflow:visible !important}
-}
-
-/* FIXED LOGO SIZING */
-.topbar img {
-  height: 34px !important;
-  width: auto;
-  max-width: 120px;
-  border-radius: 8px;
-  background: white;
-  padding: 3px;
-  margin-right: 12px;
-}
-
-.auth-card img {
-  max-height: 56px;
-  width: auto;
-  border-radius: 14px;
-  background: white;
-  padding: 6px;
-  margin-bottom: 12px;
 }
