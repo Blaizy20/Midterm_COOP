@@ -16,21 +16,21 @@ define('APP_BASE', $protocol . '://' . $_SERVER['HTTP_HOST']);
 
 if (getenv('MYSQLHOST')) {
     // --- RAILWAY ---
-    $DB_HOST = getenv('MYSQLHOST');
-    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 3306);
-    $DB_USER = getenv('MYSQLUSER');
-    $DB_PASS = getenv('MYSQLPASSWORD');
+    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
+    $DB_PORT = (int)(getenv('MYSQLPORT') ?: 27377);
+    $DB_USER = getenv('root');
+    $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
     $DB_NAME = getenv('MYSQLDATABASE') ?: 'railway';
 
 } elseif (getenv('DB_HOST')) {
     // --- ANY WEB HOST (cPanel, Hostinger, etc.) ---
     // Set these in your hosting control panel's environment variables
     // OR replace the getenv() with your actual credentials below
-    $DB_HOST = getenv('yamabiko.proxy.rlwy.net');
-    $DB_PORT = (int)(getenv('DB_PORT') ?: 27377);
-    $DB_USER = getenv('root');
-    $DB_PASS = getenv('WrLSrSxuzKAnSEJlrqjKYhrDohWxoIQo');
-    $DB_NAME = getenv('railway');
+    $DB_HOST = getenv('DB_HOST');
+    $DB_PORT = (int)(getenv('DB_PORT') ?: 3306);
+    $DB_USER = getenv('DB_USER');
+    $DB_PASS = getenv('DB_PASS');
+    $DB_NAME = getenv('DB_NAME');
 
 } else {
     // --- LOCAL (XAMPP / WAMP) ---
