@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../includes/auth.php';
-$user = current_user();
 $settings = get_system_settings();
 ?>
 <!doctype html>
