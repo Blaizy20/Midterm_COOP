@@ -141,23 +141,4 @@ function password_is_strong($pw) {
         && preg_match('/[\W_]/', $pw);
 }
 
-function log_activity($action, $description, $p1 = null, $p2 = null, $p3 = null) {
-    try {
-        $conn = db();
-        $user_id = $_SESSION['user_id'] ?? null;
-        $conn->query("CREATE TABLE IF NOT EXISTS activity_log (
-            id          INT AUTO_INCREMENT PRIMARY KEY,
-            user_id     INT,
-            action      VARCHAR(100),
-            description TEXT,
-            created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB");
-        $stmt = $conn->prepare("INSERT INTO activity_log (user_id, action, description) VALUES (?,?,?)");
-        $stmt->bind_param("iss", $user_id, $action, $description);
-        $stmt->execute();
-    } catch (Exception $e) {
-        error_log("log_activity failed: " . $e->getMessage());
-    }
-}
-
 ?>
